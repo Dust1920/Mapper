@@ -10,7 +10,12 @@ import matplotlib.pyplot as plt
 
 ext_pd = tym.tr.gtools.pd
 ext_pd.options.mode.copy_on_write = True
+
 plt.rcParams["font.family"] = "monospace"
+FIGSIZE = (20,20)
+
+
+
 
 country = "Mexico"
 
