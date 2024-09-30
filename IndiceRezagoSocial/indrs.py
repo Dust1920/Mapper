@@ -4,10 +4,12 @@ sys.path.insert(1, "..\\Mapper\\Mapper")
 sys.path.insert(1, "..\\Mapper")
 ####
 
+
 from Mapper import mapper as Mapper
 ext_plt = Mapper.plt
 import os
 import pandas as pd
+
 
 years = ['2000','2005','2010','2020']
 
