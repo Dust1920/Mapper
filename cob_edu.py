@@ -67,7 +67,7 @@ def set_interval_pos(value, **kwargs):
     intervals = [[0,19],[20,39],[40,59],[60,79],[80,99],[100,np.inf]]
     color_codes = {
     0: "white",
-    1: "#F7FBFF",
+    1: "#C7E1EF",
     2: "#94C4DF",
     3: "#4A98C9",
     4: "#1764AB",
@@ -97,19 +97,19 @@ sonorawdata['Color_Secd'] = sonorawdata['Secundaria'].transform(set_interval_pos
 
 
 educ0, pres = plt.subplots(figsize = Mapper.FIGSIZE)
-sonorawdata['Preescolar'].plot(color = sonorawdata['Color_Pres'], ax = pres)
+sonorawdata.plot('Preescolar',color = sonorawdata['Color_Pres'], ax = pres)
 sonorawdata.boundary.plot(lw = 0.5, color = "black", ax = pres)
 pres.set_axis_off()
 educ0.tight_layout()
 
 educ1, prim = plt.subplots(figsize = Mapper.FIGSIZE)
-sonorawdata['Primaria'].plot(color = sonorawdata['Color_Prim'], ax = prim)
+sonorawdata.plot('Primaria',color = sonorawdata['Color_Prim'], ax = prim)
 sonorawdata.boundary.plot(lw = 0.5, color = "black", ax = prim)
 educ1.tight_layout()
 prim.set_axis_off()
 
 educ2, secd = plt.subplots(figsize = Mapper.FIGSIZE)
-sonorawdata['Secundaria'].plot(color = sonorawdata['Color_Secd'], ax = secd)
+sonorawdata.plot('Secundaria',color = sonorawdata['Color_Secd'], ax = secd)
 sonorawdata.boundary.plot(lw = 0.5, color = "black", ax = secd)
 secd.set_axis_off()
 educ2.tight_layout()
