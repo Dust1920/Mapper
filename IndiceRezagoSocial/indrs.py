@@ -134,4 +134,4 @@ def mapa_indrs_indigena():
 mapa_iter()
 mapa_iter_indigena()
 mapa_indrs()
-mapa_indrs_indigena()
+mapa_indrs_indigena()  
