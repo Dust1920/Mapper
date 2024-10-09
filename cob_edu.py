@@ -220,8 +220,9 @@ for m,x in enumerate([ic1,ic2,ic3,ic4]):
     x.savefig(f"maps\\IC{m + 1}.png")
 
 
-for u in ['Media Superior Escolarizada', 'Media Superior Ambas','Superior Licenciatura Ambas',
-          'Superior Licenciatura Escolarizada', 'Superior Posgrado Ambas', 'Superior Posgrado Escolarizado']:
+for u in ['Media Superior Escolarizada', 'Media Superior Ambas',
+          'Superior Licenciatura Ambas', 'Superior Licenciatura Escolarizada',
+          'Superior Posgrado Ambas', 'Superior Posgrado Escolarizado']:
     fig, ax = plt.subplots(figsize = Mapper.FIGSIZE)
     sonora_3.plot(c, scheme = "percentiles", legend = True, cmap = "Blues", ax = ax)
     sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)

@@ -60,17 +60,35 @@ form_muns = catalogs['Mapa Municipio']
 # Question 6
 responsible = form["6"]
 resp_muns = responsible[6]
+responsible.set_index(6, inplace=True, drop=True)
 # Muns to Muns reference
 ref_muns = form_to_maps_muns(resp_muns)
-pre_index = [ref_muns.loc[x, 'Municipio Mapa'] for x in list(resp_muns)]
-ref_index = []
-for x in pre_index:
-    if isinstance(x, str):
-        ref_index.append(x)
+refumuns = ref_muns.reset_index()
+refumuns = refumuns.set_index('Municipio Mapa')
+print(refumuns)
+
+ref_umuns = pd.DataFrame(index = refumuns.index.unique(), columns = ['Data Muns'])
+for x in ref_umuns.index:
+    db_mun = refumuns.loc[x]
+    if len(db_mun) > 1:
+        if db_mun.ndim > 1:
+            v = db_mun.iloc[-1,0]
+        else:
+            v = db_mun.iloc[0]
     else:
-        ref_index.append(x.iloc[0])
-responsible['Municipio Mapa'] = ref_index
-print(responsible)
+        v = db_mun
+    ref_umuns.loc[x, 'Data Muns'] = v
+
+sel_respons = responsible.loc[ref_umuns['Data Muns']]
+print(sel_respons)
+
+for xs in sel_respons.index.unique():
+    u = sel_respons.loc[xs]
+    if u.ndim > 1:
+        print(u)
+        ug = u.iloc[-1]
+        sel_respons = sel_respons.drop(index = xs)
+        sel_respons.loc[xs] = ug
 
 
 # Creation Maps
