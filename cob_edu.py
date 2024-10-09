@@ -129,12 +129,6 @@ def plot_maps():
     sonorawdata.boundary.plot(lw = 0.5, color = "black", ax = secd)
     secd.set_axis_off()
     educ2.tight_layout()
-    plt.show()
-
-def save_maps():
-    """
-    Save Maps
-    """
     educ0.savefig('maps\\Preescolar.png')
     educ1.savefig('maps\\Primaria.png')
     educ2.savefig('maps\\Secundaria.png')
@@ -156,20 +150,81 @@ print(sonora_ms.columns)
 
 sonora_ms['Color_Prep0'] = sonora_ms['Media Superior Escolarizada'].transform(set_interval_pos)
 sonora_ms['Color_Prep1'] = sonora_ms['Media Superior Ambas'].transform(set_interval_pos)
+def plots2():
+    educm0, ms0 = plt.subplots(figsize = Mapper.FIGSIZE)
+    sonora_ms.plot('Media Superior Escolarizada', color = sonora_ms['Color_Prep0'], ax = ms0)
+    sonora_ms.boundary.plot(lw = 0.5, color = "black", ax = ms0)
+    ms0.set_axis_off()
+    educm0.tight_layout()
 
-educm0, ms0 = plt.subplots(figsize = Mapper.FIGSIZE)
-sonora_ms.plot('Media Superior Escolarizada', color = sonora_ms['Color_Prep0'], ax = ms0)
-sonora_ms.boundary.plot(lw = 0.5, color = "black", ax = ms0)
-ms0.set_axis_off()
-educm0.tight_layout()
-
-educm1, ms1 = plt.subplots(figsize = Mapper.FIGSIZE)
-sonora_ms.plot('Media Superior Ambas',color = sonora_ms['Color_Prep1'], ax = ms1)
-sonora_ms.boundary.plot(lw = 0.5, color = "black", ax = ms1)
-ms1.set_axis_off()
-educm1.tight_layout()
+    educm1, ms1 = plt.subplots(figsize = Mapper.FIGSIZE)
+    sonora_ms.plot('Media Superior Ambas',color = sonora_ms['Color_Prep1'], ax = ms1)
+    sonora_ms.boundary.plot(lw = 0.5, color = "black", ax = ms1)
+    ms1.set_axis_off()
+    educm1.tight_layout()
 
 
-educm0.savefig("maps\\MediaSuperiorEscolarizada.png")
-educm1.savefig("maps\\MediaSuperior.png")
+    educm0.savefig("maps\\MediaSuperiorEscolarizada.png")
+    educm1.savefig("maps\\MediaSuperior.png")
+    plt.show()
+
+###
+
+path_info = r"C:\Users\Tamara\Documents\Bases de Datos\Cobertura Educativa\Datos Mapas 09102024.xlsx"
+data = ext_pd.read_excel(path_info, index_col = 0)
+data_plot = data[['Media Superior Escolarizada', 'Media Superior Ambas',
+                  'Superior Licenciatura Ambas', 'Superior Licenciatura Escolarizada',
+                  'Superior Posgrado Ambas', 'Superior Posgrado Escolarizado',
+                  'IC_Superior Licenciatura Escolarizada','IC_Superior Licenciatura Ambas',
+                  'IC_Superior Posgrado Ambas','IC_Superior Posgrado Escolarizado']]
+data_plot[['IC_Superior Licenciatura Escolarizada', 'IC_Superior Licenciatura Ambas',
+           'IC_Superior Posgrado Ambas', 'IC_Superior Posgrado Escolarizado']] = data_plot[
+               ['IC_Superior Licenciatura Escolarizada', 'IC_Superior Licenciatura Ambas',
+                'IC_Superior Posgrado Ambas', 'IC_Superior Posgrado Escolarizado']] * 100 
+sonora_3 = sonora.copy()
+sonora_3[data_plot.columns] = data_plot
+
+sonora_3['Color_IC1'] = sonora_3['IC_Superior Licenciatura Escolarizada'].transform(set_interval_pos)
+sonora_3['Color_IC2'] = sonora_3['IC_Superior Licenciatura Ambas'].transform(set_interval_pos)
+sonora_3['Color_IC3'] = sonora_3['IC_Superior Posgrado Ambas'].transform(set_interval_pos)
+sonora_3['Color_IC4'] = sonora_3['IC_Superior Posgrado Escolarizado'].transform(set_interval_pos)
+
+
+ic1, ax = plt.subplots(figsize = Mapper.FIGSIZE)
+sonora_3.plot('IC_Superior Licenciatura Escolarizada', color = sonora_3['Color_IC1'],ax = ax)
+sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)
+ax.set_axis_off()
+ic1.tight_layout()
+
+ic2, ax = plt.subplots(figsize = Mapper.FIGSIZE)
+sonora_3.plot('IC_Superior Licenciatura Ambas', color = sonora_3['Color_IC2'], ax = ax)
+sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)
+ax.set_axis_off()
+ic2.tight_layout()
+
+ic3, ax = plt.subplots(figsize = Mapper.FIGSIZE)
+sonora_3.plot('IC_Superior Posgrado Ambas', color = sonora_3['Color_IC3'], ax = ax)
+sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)
+ax.set_axis_off()
+ic3.tight_layout()
+
+ic4, ax = plt.subplots(figsize = Mapper.FIGSIZE)
+sonora_3.plot('IC_Superior Posgrado Escolarizado', color = sonora_3['Color_IC4'], ax = ax)
+sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)
+ax.set_axis_off()
+ic4.tight_layout()
+
 plt.show()
+
+for m,x in enumerate([ic1,ic2,ic3,ic4]):
+    x.savefig(f"maps\\IC{m + 1}.png")
+
+
+for u in ['Media Superior Escolarizada', 'Media Superior Ambas','Superior Licenciatura Ambas',
+          'Superior Licenciatura Escolarizada', 'Superior Posgrado Ambas', 'Superior Posgrado Escolarizado']:
+    fig, ax = plt.subplots(figsize = Mapper.FIGSIZE)
+    sonora_3.plot(c, scheme = "percentiles", legend = True, cmap = "Blues", ax = ax)
+    sonora.boundary.plot(color = "black", lw = 0.5, ax = ax)
+    ax.set_axis_off()
+    fig.tight_layout()
+    fig.savefig(f"maps\\{u}.png")
