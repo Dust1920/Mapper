@@ -178,16 +178,16 @@ for x in program.index:
 
 # Plot Maps
 PLOT_MAPS = 1
-SAVE_MAPS = 0
+SAVE_MAPS = 1
 selection_maps = {
-    "Municipios Partipantes": 0,
-    "Responsables": 0,
-    "Politicas": 0,
-    "Convenios": 0,
-    "PlanM": 0,
-    "Dis_Plazo": 0,
-    "Dis_V": 0,
-    "Dis_Met": 0,
+    "Municipios Partipantes": 1,
+    "Responsables": 1,
+    "Politicas": 1,
+    "Convenios": 1,
+    "PlanM": 1,
+    "Dis_Plazo": 1,
+    "Dis_V": 1,
+    "Dis_Met": 1,
     "Programa": 1,
 }
 
@@ -266,6 +266,12 @@ if SAVE_MAPS:
     "Municipios Partipantes": resp,
     "Responsables": respt,
     "Politicas": pols,
+    "Convenios": convs,
+    "PlanM": plm,
+    "Dis_Plazo": dpl,
+    "Dis_V": dv,
+    "Dis_Met": dmet,
+    "Programa": program,
     }
     for k, v in save_maps.items():
         v.savefig(f"{k}.png")
